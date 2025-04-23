@@ -205,3 +205,80 @@ document.addEventListener("DOMContentLoaded", function () {
 
   observer.observe(section);
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Animation types to cycle through
+  const animationTypes = [
+    'fade-in-up',
+    'zoom-in',
+    'flip-in',
+    'slide-in-right',
+    'slide-in-left',
+    'rotate-in',
+    'bounce-in'
+  ];
+  
+  // Get all project cards
+  const projectCards = document.querySelectorAll('.col-lg-4, .col-md-6');
+  
+  // Assign a different animation type to each card in sequence
+  projectCards.forEach((card, index) => {
+    const animationType = animationTypes[index % animationTypes.length];
+    card.classList.add(animationType);
+  });
+  
+  // Track which cards have been animated
+  let animatedCards = new Set();
+  let isAnimating = false;
+  let nextCardToAnimate = 0;
+  
+  // Function to check if element is in viewport
+  function isInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    return (
+      rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.85 && 
+      rect.bottom >= 0
+    );
+  }
+  
+  // Function to animate the next card in sequence
+  function animateNextCard() {
+    if (nextCardToAnimate >= projectCards.length || isAnimating) return;
+    
+    const card = projectCards[nextCardToAnimate];
+    
+    if (isInViewport(card) && !animatedCards.has(nextCardToAnimate)) {
+      isAnimating = true;
+      
+      // Mark this card as being animated
+      animatedCards.add(nextCardToAnimate);
+      
+      // Add visible class to trigger animation
+      card.classList.add('visible');
+      
+      // Set a timeout before animating the next card
+      setTimeout(() => {
+        isAnimating = false;
+        nextCardToAnimate++;
+        animateNextCard(); // Try to animate the next card
+      }, 300); // Delay between each card animation
+    }
+  }
+  
+  // Function to start checking for cards to animate
+  function checkCardsOnScroll() {
+    if (!isAnimating) {
+      animateNextCard();
+    }
+  }
+  
+  // Run the function on scroll
+  window.addEventListener('scroll', checkCardsOnScroll);
+  
+  // Run once on page load to show elements already in viewport
+  checkCardsOnScroll();
+  
+  // Also check periodically in case the user stops scrolling
+  setInterval(checkCardsOnScroll, 500);
+});

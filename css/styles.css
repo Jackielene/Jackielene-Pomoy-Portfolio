@@ -162,7 +162,6 @@ html, body {
 
 
 /* Hero Section */
-/* 🔹 General Styling */
 .hero {
   display: flex;
   flex-direction: column;
@@ -220,6 +219,7 @@ html, body {
   position: relative;
   overflow: hidden;
   z-index: 1;
+  text-decoration: none;
 }
 
 .animated-btn::before {
@@ -324,17 +324,16 @@ html, body {
 
 
 
-/* Project Section */
-
-.container {
-  max-width: 1200px; /* Adjust the max width as needed */
+/* Project Section*/
+.containerss {
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 15px; /* Ensures some spacing on smaller screens */
+  padding-left: 15px;
   padding-right: 15px;
 }
 
-.section-title {
+.sections-title {
   font-size: 2.5rem;
   font-weight: bold;
   margin-bottom: 2rem;
@@ -344,124 +343,208 @@ html, body {
   font-family: 'Poppins', sans-serif;
 }
 
-
-
 /* Row Container for Equal Height Cards */
 .row {
   margin-left: 0;
   margin-right: 0;
+  display: flex;
+  flex-wrap: wrap;
 }
 
-/* Project Card */
+.project-title {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  transition: color 0.3s ease;
+}
+
+/* Cool Card Effects */
+.col-lg-4, .col-md-6 {
+  display: flex;
+  flex-direction: column;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+  padding: 15px;
+  /* Hide initially */
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* Remove animation from here as we'll control it with JS */
+}
+
 .project-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Pushes content evenly */
-  align-items: center;
-  width: 100%;
-  max-width: 400px; /* Ensures uniform width */
+  height: 100%;
   background: #fff;
   border-radius: 15px;
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease-in-out;
-  flex-grow: 1; /* Ensures cards take equal height */
-  min-height: 500px; /* Sets a minimum height for consistency */
-  opacity: 0;
-  transform: translateY(50px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-}
-
-/* Show Cards When in View */
-.project-card.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Image with Zoom-In Effect */
-.project-img {
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform: translateZ(0);
+  position: relative;
   width: 100%;
-  height: 200px;
-  object-fit: cover; /* Changed to cover for better image fitting */
-  border-top-left-radius: 15px;
-  border-top-right-radius: 15px;
-  background-color: #f0f0f0;
-  padding: 10px;
-  transition: transform 0.4s ease-in-out;
-}
-
-/* Image Zooms in when Hovered */
-.project-card:hover .project-img {
-  transform: scale(1.1);
-}
-
-/* Project Info */
-.project-info {
-  flex-grow: 1; /* Ensures project-info stretches to fill space */
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Ensures elements are spaced evenly */
+  justify-content: space-between;
+}
+
+.project-card:hover {
+  transform: translateY(-15px) rotateX(5deg);
+  box-shadow: 0 15px 30px rgba(106, 13, 173, 0.3);
+}
+
+.project-card:hover .project-title {
+  color: #6a0dad;
+}
+
+.project-card:hover .project-imgs {
+  transform: scale(1.08);
+  filter: brightness(1.1) contrast(1.1);
+}
+
+.project-imgs {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.8s ease, filter 0.5s ease;
+}
+
+.project-info {
   padding: 20px;
-  background: linear-gradient(135deg, #f8f9fa, #eae6f8);
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
   text-align: center;
-  min-height: 280px; /* Ensures consistency in content height */
-}
-
-/* Project Description */
-.project-description {
-  flex-grow: 1; /* Allows the description to take space */
-  font-size: 1rem;
-  color: #666;
-  margin-bottom: 15px;
-  min-height: 80px; /* Ensures all descriptions take equal space */
-}
-
-/* Programming Languages Badges */
-.project-languages {
+  background: linear-gradient(135deg, #f8f9fa, #eae6f8);
+  flex-grow: 1;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+/* Add a subtle gradient animation on hover */
+.project-info::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(248, 249, 250, 0), rgba(234, 230, 248, 0));
+  z-index: -1;
+  transition: background 0.5s ease;
+}
+
+.project-card:hover .project-info::before {
+  background: linear-gradient(135deg, rgba(248, 249, 250, 0.8), rgba(234, 230, 248, 0.9));
+}
+
+.project-description {
+  font-size: 1rem;
   margin-bottom: 15px;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.project-card:hover .project-description {
+  color: #333;
+}
+
+.project-languages {
+  margin-bottom: 70px;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-languages {
+  transform: translateY(-5px);
 }
 
 .language-badge {
-  background-color: #6a0dad;
-  color: #fff;
-  padding: 5px 12px;
-  border-radius: 20px;
-  font-size: 0.85rem;
-  font-weight: bold;
-  white-space: nowrap;
-}
-
-/* Project Button */
-.project-link {
   display: inline-block;
-  padding: 10px 20px;
-  font-size: 1rem;
-  color: #fff;
+  margin: 5px;
+  padding: 5px 10px;
   background-color: #6a0dad;
-  border-radius: 25px;
-  text-decoration: none;
+  color: #fff;
+  border-radius: 50px;
+  font-size: 0.85rem;
   transition: all 0.3s ease;
-  margin-top: auto; /* Pushes the button to the bottom */
+  font-weight: 600;
 }
 
-/* Button Hover Effect */
-.project-link:hover {
-  background-color: #5438d6;
-  box-shadow: 0 4px 8px rgba(106, 13, 173, 0.4);
+.project-card:hover .language-badge {
   transform: scale(1.05);
+  box-shadow: 0 5px 10px rgba(106, 13, 173, 0.2);
 }
 
-/* Card Fade-in Animation */
-@keyframes fadeIn {
+.project-button {
+  padding: 15px;
+  text-align: center;
+  background: linear-gradient(135deg, #f8f9fa, #eae6f8);
+  transition: background 0.3s ease;
+}
+
+.project-card:hover .project-button {
+  background: linear-gradient(135deg, #eae6f8, #f8f9fa);
+}
+
+/* Enhanced GitHub Button - UPDATED */
+.project-link {
+  text-decoration: none;
+  padding: 10px 25px;
+  background-color: #6a0dad;
+  color: #fff;
+  border-radius: 50px;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 13px;
+  display: inline-block;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: fit-content;
+  max-width: 90%;
+  text-align: center;
+  z-index: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  font-weight: 600;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .project-link {
+    font-size: 11px !important;
+    padding: 8px 18px;
+    width: 120px;
+    margin-left: -60px;
+  }
+}
+
+/* Media queries for responsive layout */
+@media (max-width: 992px) {
+  .col-lg-4 {
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  .col-lg-4, .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  
+  .project-card:hover {
+    transform: translateY(-10px) rotateX(3deg);
+  }
+}
+
+/* Define different entrance animations - these will be applied via JS */
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(50px);
   }
   to {
     opacity: 1;
@@ -469,12 +552,115 @@ html, body {
   }
 }
 
-/* Responsive Fix */
-@media (max-width: 768px) {
-  .project-card {
-    margin-bottom: 20px;
+@keyframes zoomIn {
+  from {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }
+
+@keyframes flipIn {
+  from {
+    opacity: 0;
+    transform: rotateY(90deg);
+  }
+  to {
+    opacity: 1;
+    transform: rotateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes rotateIn {
+  from {
+    opacity: 0;
+    transform: rotate(-15deg) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0) scale(1);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Visible class - general */
+.col-lg-4.visible, .col-md-6.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animation classes for each unique entrance */
+.fade-in-up.visible {
+  animation: fadeInUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.zoom-in.visible {
+  animation: zoomIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.flip-in.visible {
+  animation: flipIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.slide-in-right.visible {
+  animation: slideInRight 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.slide-in-left.visible {
+  animation: slideInLeft 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.rotate-in.visible {
+  animation: rotateIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.bounce-in.visible {
+  animation: bounceIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+
+
 
 
 /* About Section */
@@ -548,7 +734,9 @@ html, body {
 }
 
 /* Button */
-.animated-btn {
+/* Button */
+.animated-btn1 {
+  font-family: 'Poppins', sans-serif;
   display: inline-block;
   padding: 12px 24px;
   font-size: 1rem;
@@ -557,15 +745,43 @@ html, body {
   background: #6a0dad;
   border-radius: 50px;
   text-decoration: none;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease;
   box-shadow: 0 4px 10px rgba(106, 13, 173, 0.3);
+  width: fit-content; /* Button width adjusts based on content */
+  text-align: center;
+  margin: 20px auto 0 auto;
+  margin-left: 100px; /* Adjust this value to move the button to the left */
+  position: relative; /* for the ::before element */
+  overflow: hidden;
+  z-index: 1;
 }
 
-.animated-btn:hover {
-  background: #5438d6;
-  box-shadow: 0 8px 20px rgba(106, 13, 173, 0.5);
-  transform: scale(1.05);
+/* Add background effect on hover */
+.animated-btn1::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(167, 106, 177, 0.3); /* Subtle light background */
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+  z-index: -1;
 }
+
+/* Hover effects */
+.animated-btn1:hover::before {
+  transform: scaleX(1); /* Expand background effect on hover */
+}
+
+.animated-btn1:hover {
+  color: #8662bb; /* Ensure text color remains white on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px); /* Slight lift effect */
+}
+
 
 /* Fade-In Animations */
 .fade-in-left {
